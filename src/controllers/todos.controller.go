@@ -77,3 +77,28 @@ func DeleteTodo(c *gin.Context) {
 
 	c.JSON(http.StatusOK, gin.H{"message": "Todo deleted successfully"})
 }
+
+func UpdateTodo(c *gin.Context) {
+	var todo models.Todo
+
+	result := db.DB.First(&todo, c.Param("id"))
+
+	if result.Error != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Error fetching todo"})
+		return
+	}
+
+	if err := c.ShouldBindJSON(&todo); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	result = db.DB.Save(&todo)
+
+	if result.Error != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Error updating todo"})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{"message": "Todo updated successfully", "todo": todo})
+}

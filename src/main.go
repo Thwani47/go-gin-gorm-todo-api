@@ -18,6 +18,7 @@ func main() {
 	router.GET("/api/v1/todos/complete", controllers.GetCompleteTodos)
 	router.GET("/api/v1/todo/:id", controllers.GetTodo)
 	router.DELETE("/api/v1/todo/:id", controllers.DeleteTodo)
+	router.PUT("/api/v1/todo/:id", controllers.UpdateTodo)
 
 	router.Run(":5000")
 }
