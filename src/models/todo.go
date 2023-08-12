@@ -4,6 +4,6 @@ import "gorm.io/gorm"
 
 type Todo struct {
 	gorm.Model
-	Title string
-	Done  bool `gorm:"default:false"`
+	Title string `gorm:"not null" json:"title"`
+	Done  bool   `gorm:"default:false"`
 }
